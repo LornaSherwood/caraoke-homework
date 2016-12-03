@@ -1,19 +1,23 @@
  class Room
 
-  attr_reader :theme
+  attr_reader :theme, :room_maximum
   attr_accessor :group, :song_list, :song_total
 
-  def initialize(theme)
+  def initialize(theme, room_maximum)
     @theme = theme
     @group = []
     @song_list = []
     @song_total = []
-
+    @room_maximum = room_maximum
   end
 
   def check_in_guest(guest)
-    group << guest.name
-    return group
+    if @group.count >= @room_maximum
+      return "The room can only take #{@room_maximum} people."
+    else
+      group << guest.name
+      return group
+    end
   end
 
   def add_song(song)
@@ -37,7 +41,6 @@
     end
   end
 
-
-
+ 
 
 end

@@ -10,10 +10,11 @@ class RoomSpec < MiniTest::Test
 
   def setup
     @viewer = Viewer.new
-    @room_1 = Room.new("Country and Western")
-    @room_2 = Room.new("Rock")
+    @room_1 = Room.new("Country and Western", 4)
+    @room_2 = Room.new("Rock", 2)
     @guest_1 = Guest.new("Mike")
     @guest_2 = Guest.new("Blaise")
+    @guest_3 = Guest.new("Julia")
     @song_1 = Song.new("American Idiot", "Greenday", "Don't wanna be an American idiot")
     @song_2 = Song.new("In the morning", "Razorlight", "Don't know what I'm doing wrong")
   end
@@ -32,6 +33,8 @@ class RoomSpec < MiniTest::Test
     @room_1.check_in_guest(@guest_2)
     assert_equal(2, @room_1.group.count)
   end
+
+  
 
   def test_can_add_song
     song_list = @room_2.add_song(@song_1)
@@ -85,6 +88,13 @@ class RoomSpec < MiniTest::Test
     assert_equal(0, @room_2.group.count)
   end
 
+  def test_cannot_add_additional_guest
+    @room_2.check_in_guest(@guest_1)
+    @room_2.check_in_guest(@guest_2)
+    add_additional_guest = @room_2.check_in_guest(@guest_3)
+    assert_equal(2, @room_2.group.count)
+    assert_equal("The room can only take 2 people.", add_additional_guest)
+  end
 
 
 
