@@ -21,22 +21,23 @@
     return song_list
   end
 
-  # def choose_song(num)
-  #   return song_list[num]
-  # end
-
   def guest_can_sing_song(guest, song_number)
     song_total << 1
     return "#{guest.name} sings #{song_list[song_number][2]}."
   end
 
-  # def end_session?
-  #   viewer.end_session if song_total == 10
-  # end
-
   def check_out_guests
     return group.clear
   end
+
+  def end_session
+    if song_total.count >= 10
+      group.clear
+      return "Your session is over now."
+    end
+  end
+
+
 
 
 end
